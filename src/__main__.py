@@ -3,10 +3,6 @@ import argparse, sys
 import cmdyi
 import Yi4kAPI
 
-import kiLog
-kiLog.names(('',))
-
-
 if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control. v1.2')
 
