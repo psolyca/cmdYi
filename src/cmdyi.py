@@ -1,5 +1,5 @@
-import time, logging
 import sys, os
+import logging
 import Yi4kAPI
 
 from importlib import import_module
