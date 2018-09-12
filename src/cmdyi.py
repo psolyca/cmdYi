@@ -107,17 +107,17 @@ class yiCmd():
 	def close(self):
 		self.yi.close()
 
-	def execute(self, commands={}):
-		print("commands : %s" % commands)
+	def execute(self, commands={}, _sCB= False):
+		logging.debug("Commands executed: %s" % commands)
 		for cCmd in self.cmdA:
 			cName= '_'.join( cCmd.commandName.split('-') )
 			if cName in commands:
-				if cCmd.values:
-					res= self.yi.cmd(cCmd, cCmd.values[int(commands[cName])])
-					print("%s: %s, %s" % (cName, cCmd.values.index(res),res))
-				else:
-					res= self.yi.cmd(cCmd, commands[cName])
-					print("%s: %s" % (cName, res))
+					if cCmd.values:
+						res= self.yi.cmd(cCmd, cCmd.values[int(commands[cName])], _sCB)
+						logging.info("%s: %s, %s" % (cName, cCmd.values.index(res),res))
+					else:
+						res= self.yi.cmd(cCmd, commands[cName], _sCB)
+						logging.info("%s: %s" % (cName, res))
 
 	def listenSetup(self):
 		self.yi.setCB("start_video_record", self.listenCB("start_video_record"))
@@ -147,7 +147,7 @@ class yiCmd():
 				pass
 			else:
 				print("module loaded")
-				self.execute(mod.cmd(_res[cParam]))
+				self.execute(mod.cmd(_res[cParam]), _sCB= True)
 
 		return cb
 
