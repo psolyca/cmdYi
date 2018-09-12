@@ -4,6 +4,8 @@ import Yi4kAPI
 
 from importlib import import_module
 
+sys.path.append('/tmp/fuse_d/events')
+
 class yiCmd():
 	#set order
 	cmdA= (
