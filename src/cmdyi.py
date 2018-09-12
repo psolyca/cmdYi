@@ -110,6 +110,10 @@ def execute(_yi, _args):
 			else:
 				res= _yi.cmd(cCmd, _args[cName])
 				print("%s: %s" % (cName, res))
+			if res == -21:
+				print('Already recording')
+			if res == -14:
+				print('Already stopped')
 
 
 
