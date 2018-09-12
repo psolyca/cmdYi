@@ -132,14 +132,12 @@ class yiCmd():
 			for cParam in _params:
 				paramA.append(', %s' % _res[cParam])
 			
-			print("Event: %s%s" % (_name, ''.join(paramA)))
+			logging.info("Event: %s%s" % (_name, ''.join(paramA)))
 			try:
 				mod = import_module(_name)
 			except ImportError:
-				print('Error importing module')
 				pass
 			else:
-				print("module loaded")
 				self.execute(mod.cmd(_res[cParam]), _sCB= True)
 
 		return cb
