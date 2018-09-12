@@ -1,5 +1,5 @@
-import argparse, sys
 import time, logging
+import sys, os
 import Yi4kAPI
 
 from importlib import import_module
@@ -87,19 +87,6 @@ class yiCmd():
 	)
 
 	def __init__(self, _ip):
-		cParser= argparse.ArgumentParser(description='Yi 4k remote control. v1.2')
-
-		for cmd in Yi4kAPI.commands:
-			if cmd.values:
-				limitZip= list(zip(range(0,len(cmd.values)), cmd.values))
-				cParser.add_argument(('-%s' % cmd.commandName),
-					choices=list(str(a) for a,b in limitZip),
-					help=str(dict(limitZip))
-				)
-			else:
-				cParser.add_argument(('-%s' % cmd.commandName))
-		self.args=vars(cParser.parse_args())
-
 		self.yi= Yi4kAPI.YiAPI(_ip)
 		if not self.yi.sock:
 			logging.error('Camera not found')
