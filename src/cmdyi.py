@@ -99,12 +99,18 @@ class yiCmd():
 		for cCmd in self.cmdA:
 			cName= '_'.join( cCmd.commandName.split('-') )
 			if cName in commands:
+				try:
 					if cCmd.values:
 						res= self.yi.cmd(cCmd, cCmd.values[int(commands[cName])], _sCB)
 						logging.info("%s: %s, %s" % (cName, cCmd.values.index(res),res))
 					else:
 						res= self.yi.cmd(cCmd, commands[cName], _sCB)
 						logging.info("%s: %s" % (cName, res))
+				except:
+					if res == -21:
+						logging.warning('Already recording')
+					if res == -14:
+						logging.warning('Already stopped')
 
 	def listenSetup(self):
 		self.yi.setCB("start_video_record", self.listenCB("start_video_record"))
