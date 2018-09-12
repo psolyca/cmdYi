@@ -143,9 +143,12 @@ class yiCmd():
 		return cb
 
 def main():
-	
-	logging.basicConfig(filename='test_log.log',level=logging.DEBUG,\
-	format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
+	if os.path.isfile('/tmp/fuse_d/events/debug'):
+		logging.basicConfig(filename='/tmp/fuse_d/cmdyi.log',level=logging.DEBUG,\
+		format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
+	elif os.path.isfile('/tmp/fuse_d/events/info'):
+		logging.basicConfig(filename='/tmp/fuse_d/cmdyi.log',level=logging.INFO,\
+		format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
 	
 	cmdyi= yiCmd('192.168.1.4')
 
