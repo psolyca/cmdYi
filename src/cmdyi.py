@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import sys, os
 import logging
 import Yi4kAPI
@@ -152,7 +153,7 @@ def main():
 		logging.basicConfig(filename='/tmp/fuse_d/cmdyi.log',level=logging.INFO,\
 		format='%(asctime)s -- %(name)s -- %(levelname)s -- %(message)s')
 	
-	cmdyi= yiCmd('192.168.1.4')
+	cmdyi= yiCmd('127.0.0.1')
 
 	# This script only listen to Yi4k
 	cmdyi.listenSetup()
