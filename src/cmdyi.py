@@ -93,6 +93,14 @@ class yiCmd():
 		self.yi= Yi4kAPI.YiAPI(_ip)
 		if not self.yi.sock:
 			logging.error('Camera not found')
+		self.events_boot= None
+		try:
+			events_boot= import_module("events_boot")
+		except ImportError:
+			logging.debug("ImportError module : events_boot")
+			pass
+		else:
+			self.events_boot= events_boot.init()
 
 	def close(self):
 		self.yi.close()
