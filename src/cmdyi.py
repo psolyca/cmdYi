@@ -150,7 +150,7 @@ class yiCmd():
 				logging.debug("ImportError module : %s" % _name)
 				pass
 			else:
-				self.execute(mod.cmd(_res[cParam]), _sCB= True)
+				mod.cmd(self, _res)
 
 		return cb
 
