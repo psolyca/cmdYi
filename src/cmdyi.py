@@ -100,7 +100,7 @@ class yiCmd():
 			logging.debug("ImportError module : events_boot")
 			pass
 		else:
-			self.events_boot= events_boot.init()
+			self.events_boot= events_boot.init(self)
 
 	def close(self):
 		self.yi.close()
