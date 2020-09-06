@@ -41,8 +41,6 @@ cmdA= (
 	Yi4kAPI.getVideoRotateMode,
 	Yi4kAPI.getBuzzerVolume,
 	Yi4kAPI.getLoopDuration,
-
-
 	Yi4kAPI.setDateTime,
 	Yi4kAPI.setSystemMode,
 	Yi4kAPI.setVideoResolution,
@@ -78,32 +76,22 @@ cmdA= (
 	Yi4kAPI.setVideoRotateMode,
 	Yi4kAPI.setBuzzerVolume,
 	Yi4kAPI.setLoopDuration,
-
 	Yi4kAPI.capturePhoto,
 	Yi4kAPI.startRecording,
-
 	Yi4kAPI.startViewFinder,
 	Yi4kAPI.stopViewFinder
 )
 
-
 def init(_args):
 	yi= Yi4kAPI.YiAPI()
-
 	if yi.sock:
 		return yi
-
 	logging.error('Camera not found')
-
-
 
 def execute(_yi, _args):
 	_yi.cmd(Yi4kAPI.startViewFinder)
-
-
 	if _args['listen']:
 		listenSetup(_yi)
-
 	for cCmd in cmdA:
 		cName= '_'.join( cCmd.commandName.split('-') )
 		if _args[cName] not in (None,False):
@@ -118,15 +106,11 @@ def execute(_yi, _args):
 			if res == -14:
 				print('Already stopped')
 
-
-
-
 def listenSetup(_yi):
 	_yi.setCB("start_video_record", listenCB("start_video_record"))
 	_yi.setCB("video_record_complete", listenCB("video_record_complete", ('param',)) )
 	_yi.setCB("start_photo_capture", listenCB("start_photo_capture"))
 	_yi.setCB("photo_taken", listenCB("photo_taken", ('param',)) )
-
 	_yi.setCB("enter_album", listenCB("enter_album"))
 	_yi.setCB("exit_album", listenCB("exit_album"))
 	_yi.setCB("battery", listenCB("battery", ('param',)) )
@@ -136,23 +120,17 @@ def listenSetup(_yi):
 	_yi.setCB("sdcard_format_done", listenCB("sdcard_format_done"))
 	_yi.setCB("setting_changed", listenCB("setting_changed", ('param', 'value')) )
 
-
-
 def listenCB(_name, _params=()):
 	def cb(_res):
 		paramA= []
 		for cParam in _params:
 			paramA.append(', %s' % _res[cParam])
-		
 		print("Event: %s%s" % (_name, ''.join(paramA)))
-
 	return cb
 
 if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control. v1.2')
-
 	cParser.add_argument('-listen', action='store_true', help='Report camera notification messages till keypress.')
-
 	for cmd in Yi4kAPI.commands:
 		if cmd.variable:
 			if cmd.values:
@@ -165,38 +143,24 @@ if __name__ == '__main__':
 				cParser.add_argument(('-%s' % cmd.commandName))
 		else:
 			cParser.add_argument(('-%s' % cmd.commandName), action='store_true', help='')
-
-								
 	try:
 		args= vars(cParser.parse_args())
 	except:
 		sys.exit(0)
-
-
 	setAny= False
-	argsA= {}
 	for argn,argv in args.items():
 		if argv:
 			setAny= True
 			break
-
 	if not setAny:
 		cParser.print_help()
 		sys.exit(0)
-
-
-
-
 	yi= init(args)
 	if yi:
 		try:
 			execute(yi, args)
-
 			if args['listen']:
 				input("Listening...\n")
-
 		except KeyboardInterrupt:
 			None
-
 		yi.close()
-
