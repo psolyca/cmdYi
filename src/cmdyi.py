@@ -80,7 +80,10 @@ cmdA= (
 	Yi4kAPI.setLoopDuration,
 
 	Yi4kAPI.capturePhoto,
-	Yi4kAPI.startRecording
+	Yi4kAPI.startRecording,
+
+	Yi4kAPI.startViewFinder,
+	Yi4kAPI.stopViewFinder
 )
 
 
