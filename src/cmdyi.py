@@ -1,6 +1,7 @@
 import argparse, sys
 import time, logging
 import Yi4kAPI
+import ipaddress
 
 #set order
 cmdA= (
@@ -83,7 +84,7 @@ cmdA= (
 )
 
 def init(_args):
-	yi= Yi4kAPI.YiAPI()
+	yi= Yi4kAPI.YiAPI(str(_args["IP"]))
 	if yi.sock:
 		return yi
 	logging.error('Camera not found')
@@ -130,6 +131,7 @@ def listenCB(_name, _params=()):
 
 if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control. v1.2')
+	cParser.add_argument('IP', action='store', type=ipaddress.ip_address, help='IP of the camera to be controlled.', default='192.168.42.1')
 	cParser.add_argument('-listen', action='store_true', help='Report camera notification messages till keypress.')
 	for cmd in Yi4kAPI.commands:
 		if cmd.variable:
